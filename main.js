@@ -95,3 +95,16 @@ for (let pers of array) {
     }
 
 }
+const form =document.getElementById("form");
+form.addEventListener("submit",function(e){
+    const lastname = document.getElementById("lastname");
+    const firstname1 = document.getElementById("firstname1");
+    const firstname2 = document.getElementById("firstname2");
+    const married = document.getElementById("checkbox");
+    const pet = document.getElementById("pet");
+    const lastnamevalue=lastname.value;
+    const firstname1value=firstname1.value;
+    const firstname2value=firstname2.value;
+    const marriedvalue=married.checked;
+    const petvalue=pet.value; 
+});
