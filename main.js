@@ -68,7 +68,7 @@ form.addEventListener("submit", function (e) {
     const marriedValue = married.checked;
     const petValue = pet.value;
 
-    if(firstName2Value=== ""){
+    if (firstName2Value === "") {
         firstName2Value = undefined;
     }
     const newPerson = {
@@ -78,14 +78,41 @@ form.addEventListener("submit", function (e) {
         married: marriedValue,
         pet: petValue
     }
-   
-    array.push(newPerson);
-    console.log(array)
 
-    renderTable();
+    if (validateField(lastname, firstName1, pet)) {
+        array.push(newPerson);
+        console.log(array)
+
+
+        renderTable();
+    }
+
 })
 
 renderTable();
+
+function validateField(lastname, firstName1, pet) {
+    if (lastname.value === "") {
+        const apa = lastname.parentElement
+        const error = apa.querySelector(".error")
+        error.innerHTML = "kötelező"
+        return false
+
+    }
+    if (firstName1.value === "") {
+        const firstapa = firstName1.parentElement
+        const firsterror = firstapa.querySelector(".error")
+        firsterror.innerHTML = "kötelező"
+        return false
+    }
+    if (pet.value === "") {
+        const petapa = pet.parentElement
+        const peterror = petapa.querySelector(".error")
+        peterror.innerHTML = "kötelező"
+        return false
+    }
+    return true
+}
 
 function renderTable() {
     tbody.innerHTML = '';
@@ -99,7 +126,7 @@ function renderTable() {
         td_firstname1.innerHTML = pers.firstname1;
         tr_body.appendChild(td_firstname1);
 
-      
+
         if (pers.firstname2 === undefined) {
             td_firstname1.colSpan = 2;
         } else {
@@ -127,6 +154,6 @@ function renderTable() {
             td_married.innerHTML = "nem";
             tr_body.appendChild(td_married);
         }
-       
+
     }
 }
