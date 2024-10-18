@@ -32,10 +32,6 @@ let array = [
 const table = document.createElement("table");
 const thead = document.createElement("thead");
 const tr_head = document.createElement("tr");
-const th_lastname = document.createElement("th");
-const th_firstname = document.createElement("th");
-const th_hazas = document.createElement("th");
-const th_pet = document.createElement("th");
 const tbody = document.createElement("tbody");
 
 document.body.appendChild(table);
@@ -92,26 +88,29 @@ form.addEventListener("submit", function (e) {
 renderTable();
 
 function validateField(lastname, firstName1, pet) {
+    let result = true
     if (lastname.value === "") {
         const apa = lastname.parentElement
         const error = apa.querySelector(".error")
         error.innerHTML = "kötelező"
-        return false
+        result = false
 
     }
     if (firstName1.value === "") {
         const firstapa = firstName1.parentElement
         const firsterror = firstapa.querySelector(".error")
         firsterror.innerHTML = "kötelező"
-        return false
+        result = false
     }
     if (pet.value === "") {
         const petapa = pet.parentElement
         const peterror = petapa.querySelector(".error")
         peterror.innerHTML = "kötelező"
-        return false
+        result = false
     }
-    return true
+    return result
+
+   
 }
 
 function renderTable() {
