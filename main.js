@@ -29,23 +29,13 @@ let array = [
 ]
 
 
-const table = document.createElement("table");
-const thead = document.createElement("thead");
-const tr_head = document.createElement("tr");
-const tbody = document.createElement("tbody");
+creatHtmlElement("table", "persontable", document.body);
+creatHtmlElementWithParentId("thead", "personthead", "persontable");
+creatHtmlElementWithParentId("tr", "persontr", "personthead");
+creatHtmlElementWithParentId("thead", "persontbody", "persontable");
 
-document.body.appendChild(table);
-table.appendChild(thead);
-thead.appendChild(tr_head);
-
-table.appendChild(tbody);
-
-creatTableCell("th","Vezetéknév",tr_head);
-creatTableCell("th","keresztnév",tr_head);
-
-creatTableCell("th","pet",tr_head);
-creatTableCell("th","házas",tr_head);
-
+renderTableHeader();
+renderTable(array);
 
 
 const form = document.getElementById("form");
@@ -79,12 +69,12 @@ form.addEventListener("submit", function (e) {
         console.log(array)
 
 
-        renderTable();
+        renderTable(array);
     }
 
 })
 
-renderTable();
+
 
 function validateField(lastname, firstName1, pet) {
     let result = true
@@ -109,62 +99,5 @@ function validateField(lastname, firstName1, pet) {
     }
     return result
 
-   
-}
 
-function renderTable() {
-    tbody.innerHTML = '';
-    for (const pers of array) {
-        const tr_body = document.createElement("tr");
-        tbody.appendChild(tr_body);
-        const td_lastname = document.createElement("td");
-        td_lastname.innerHTML = pers.lastname;
-        tr_body.appendChild(td_lastname);
-        const td_firstname1 = document.createElement("td");
-        td_firstname1.innerHTML = pers.firstname1;
-        tr_body.appendChild(td_firstname1);
-
-
-        if (pers.firstname2 === undefined) {
-            td_firstname1.colSpan = 2;
-        } else {
-            const td_firstname2 = document.createElement("td");
-            td_firstname2.innerHTML = pers.firstname2;
-            tr_body.appendChild(td_firstname2);
-        }
-        tr_body.addEventListener("click", function (e) {
-            console.log("clicked");
-            const select = tbody.querySelector(".selected");
-            if (select != undefined) {
-                select.classList.remove("selected");
-            }
-            e.currentTarget.classList.add("selected");
-        });
-        const td_pet = document.createElement("td");
-        td_pet.innerHTML = pers.pet;
-        tr_body.appendChild(td_pet);
-        if (pers.married == true) {
-            const td_married = document.createElement("td");
-            td_married.innerHTML = "igen";
-            tr_body.appendChild(td_married);
-        } else {
-            const td_married = document.createElement("td");
-            td_married.innerHTML = "nem";
-            tr_body.appendChild(td_married);
-        }
-
- 
-    }
-
-}
-/**
- *
- * @param {td-th} tagname
- * @param {string} inner
- * @param {HTMLTableRowElement} parent
- */
-function creatTableCell(tagname,inner,parent){
-    const td = document.createElement(tagname);
-    td.innerHTML = inner;
-    parent.appendChild(td);
 }
