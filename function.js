@@ -4,37 +4,34 @@
  * @param {string} inner
  * @param {HTMLTableRowElement} parent
  */
-function creatTableCell(tagname,inner,parent){
+function creatTableCell(tagname, inner, parent) {
     const td = document.createElement(tagname);
     td.innerHTML = inner;
     parent.appendChild(td);
+    return td;
 }
-function creatHtmlElement(tag, id, parent)
-{
+function creatHtmlElement(tag, id, parent) {
     const elem = document.createElement(tag)
-    elem.id=id;
+    elem.id = id;
     parent.appendChild(elem)
 }
-function creatHtmlElementWithParentId(tag,id, parentid)
- {
+function creatHtmlElementWithParentId(tag, id, parentid) {
     const par = document.getElementById(parentid)
-    if(par != undefined)
-    {
-        creatHtmlElement(tag,id,par)
+    if (par != undefined) {
+        creatHtmlElement(tag, id, par)
     }
- }
-
-function renderTableHeader(personarray)
-{
-    const parent = document.getElementById(persontr)
-    creatTableCell("th","vezetéknév",parent)
-    const kerszt= creatTableCell("th","keresztnév", parent)
-    kerszt.colSpan = 2
-    creatTableCell("th","házas",parent)
-    creatTableCell("th","állat",parent)
 }
 
-function renderTable() {
+function renderTableHeader(personarray,persontr) {
+    const parent = document.getElementById(persontr)
+    creatTableCell("th", "vezetéknév", parent)
+    const kerszt = creatTableCell("th", "keresztnév", parent)
+    kerszt.colSpan = 2
+    creatTableCell("th", "házas", parent)
+    creatTableCell("th", "állat", parent)
+}
+
+function renderTable(array) {
     tbody.innerHTML = '';
     for (const pers of array) {
         const tr_body = document.createElement("tr");
@@ -75,7 +72,32 @@ function renderTable() {
             tr_body.appendChild(td_married);
         }
 
- 
+
     }
+
+}
+function validateField(lastname, firstName1, pet) {
+    let result = true
+    if (lastname.value === "") {
+        const apa = lastname.parentElement
+        const error = apa.querySelector(".error")
+        error.innerHTML = "kötelező"
+        result = false
+
+    }
+    if (firstName1.value === "") {
+        const firstapa = firstName1.parentElement
+        const firsterror = firstapa.querySelector(".error")
+        firsterror.innerHTML = "kötelező"
+        result = false
+    }
+    if (pet.value === "") {
+        const petapa = pet.parentElement
+        const peterror = petapa.querySelector(".error")
+        peterror.innerHTML = "kötelező"
+        result = false
+    }
+    return result
+
 
 }

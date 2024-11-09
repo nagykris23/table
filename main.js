@@ -32,9 +32,9 @@ let array = [
 creatHtmlElement("table", "persontable", document.body);
 creatHtmlElementWithParentId("thead", "personthead", "persontable");
 creatHtmlElementWithParentId("tr", "persontr", "personthead");
-creatHtmlElementWithParentId("thead", "persontbody", "persontable");
-
+creatHtmlElementWithParentId("tbody", "persontbody", "persontable");
 renderTableHeader();
+
 renderTable(array);
 
 
@@ -76,28 +76,4 @@ form.addEventListener("submit", function (e) {
 
 
 
-function validateField(lastname, firstName1, pet) {
-    let result = true
-    if (lastname.value === "") {
-        const apa = lastname.parentElement
-        const error = apa.querySelector(".error")
-        error.innerHTML = "kötelező"
-        result = false
 
-    }
-    if (firstName1.value === "") {
-        const firstapa = firstName1.parentElement
-        const firsterror = firstapa.querySelector(".error")
-        firsterror.innerHTML = "kötelező"
-        result = false
-    }
-    if (pet.value === "") {
-        const petapa = pet.parentElement
-        const peterror = petapa.querySelector(".error")
-        peterror.innerHTML = "kötelező"
-        result = false
-    }
-    return result
-
-
-}
