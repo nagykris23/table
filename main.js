@@ -32,8 +32,8 @@ let array = [
 creatHtmlElement("table", "persontable", document.body);
 creatHtmlElementWithParentId("thead", "personthead", "persontable");
 creatHtmlElementWithParentId("tr", "persontr", "personthead");
-creatHtmlElementWithParentId("tbody", "persontbody", "persontable");
-renderTableHeader();
+renderTableHeader("persontr");
+creatHtmlElementWithParentId("tbody", "personbody", "persontable");
 
 renderTable(array);
 
@@ -41,6 +41,9 @@ renderTable(array);
 const form = document.getElementById("form");
 form.addEventListener("submit", function (e) {
     e.preventDefault();
+
+    const tbody = document.getElementById("personbody");
+
     const lastName = document.getElementById("lastname");
     const firstName1 = document.getElementById("firstname1");
     const firstName2 = document.getElementById("firstname2");
@@ -66,14 +69,9 @@ form.addEventListener("submit", function (e) {
 
     if (validateField(lastname, firstName1, pet)) {
         array.push(newPerson);
-        console.log(array)
-
-
+        console.log(array);
         renderTable(array);
+        form.reset();
     }
 
 })
-
-
-
-

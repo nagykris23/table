@@ -3,54 +3,65 @@
  * @param {td|th} tagname
  * @param {string} inner
  * @param {HTMLTableRowElement} parent
+ * @returns{HTMLElement}
  */
+
 function creatTableCell(tagname, inner, parent) {
     const td = document.createElement(tagname);
     td.innerHTML = inner;
+
     parent.appendChild(td);
     return td;
 }
+/**
+ *
+ * @param {*} tag
+ * @param {*} id
+ * @param {*} parent
+ */
 function creatHtmlElement(tag, id, parent) {
     const elem = document.createElement(tag)
     elem.id = id;
-    parent.appendChild(elem)
+    parent.appendChild(elem);
+
 }
+
 function creatHtmlElementWithParentId(tag, id, parentid) {
-    const par = document.getElementById(parentid)
-    if (par != undefined) {
-        creatHtmlElement(tag, id, par)
+    const elem = document.getElementById(parentid)
+    if (elem != undefined) {
+        creatHtmlElement(tag, id, elem)
     }
 }
 
-function renderTableHeader(personarray,persontr) {
-    const parent = document.getElementById(persontr)
-    creatTableCell("th", "vezetéknév", parent)
-    const kerszt = creatTableCell("th", "keresztnév", parent)
+function renderTableHeader(persontr) {
+    const theader = document.getElementById(persontr)
+    creatTableCell("th", "vezetéknév", theader)
+    const kerszt = creatTableCell("th", "keresztnév", theader)
     kerszt.colSpan = 2
-    creatTableCell("th", "házas", parent)
-    creatTableCell("th", "állat", parent)
+    creatTableCell("th", "házas", theader)
+    creatTableCell("th", "állat", theader)
 }
 
-function renderTable(array) {
+function renderTable(parray) {
+    const tbody = document.getElementById("personbody")
     tbody.innerHTML = '';
-    for (const pers of array) {
+    for (let pers of parray) {
         const tr_body = document.createElement("tr");
-        tbody.appendChild(tr_body);
-        const td_lastname = document.createElement("td");
-        td_lastname.innerHTML = pers.lastname;
-        tr_body.appendChild(td_lastname);
-        const td_firstname1 = document.createElement("td");
-        td_firstname1.innerHTML = pers.firstname1;
-        tr_body.appendChild(td_firstname1);
+
+        creatTableCell('td', pers.lastname, tr_body)
+        const firstName1 = creatTableCell('td', pers.firstname1, tr_body);
 
 
         if (pers.firstname2 === undefined) {
-            td_firstname1.colSpan = 2;
+            firstName1.colSpan = 2;
         } else {
-            const td_firstname2 = document.createElement("td");
-            td_firstname2.innerHTML = pers.firstname2;
-            tr_body.appendChild(td_firstname2);
+            creatTableCell("td", pers.firstname2, tr_body);
         }
+        creatTableCell("td", pers.married ? "igen" : "nem", tr_body);
+
+        creatTableCell("td", pers.pet, tr_body);
+
+        tbody.appendChild(tr_body);
         tr_body.addEventListener("click", function (e) {
             console.log("clicked");
             const select = tbody.querySelector(".selected");
@@ -59,23 +70,13 @@ function renderTable(array) {
             }
             e.currentTarget.classList.add("selected");
         });
-        const td_pet = document.createElement("td");
-        td_pet.innerHTML = pers.pet;
-        tr_body.appendChild(td_pet);
-        if (pers.married == true) {
-            const td_married = document.createElement("td");
-            td_married.innerHTML = "igen";
-            tr_body.appendChild(td_married);
-        } else {
-            const td_married = document.createElement("td");
-            td_married.innerHTML = "nem";
-            tr_body.appendChild(td_married);
-        }
+
 
 
     }
 
 }
+
 function validateField(lastname, firstName1, pet) {
     let result = true
     if (lastname.value === "") {
